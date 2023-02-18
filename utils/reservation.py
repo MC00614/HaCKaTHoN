@@ -56,45 +56,46 @@ class Reservation:
         self.timeline.pop(0)
         self.timeline.append(0)
         
+        
+if __name__== "__main__":
+    #### 사용 예시 ####
 
-#### 사용 예시 ####
+    # 슬롯 초기화
+    slot = Reservation()
 
-# 슬롯 초기화
-slot = Reservation()
+    # 3초 뒤 도착할건데, 3초 뒤로 가능한 시간좀 보여주세요
+    can_time = slot.check_reservation(eta = 3.0)
+    print(can_time)
 
-# 3초 뒤 도착할건데, 3초 뒤로 가능한 시간좀 보여주세요
-can_time = slot.check_reservation(eta = 3.0)
-print(can_time)
+    for time in can_time:
+        # 내 차는 지나가는데 3초가 필요합니다
+        if time[1] - time[0] > 3:
+            # 3초간 예약해주세요
+            slot.reserve(time[0], time[0]+3, car_no=1)
+            break
+    print(slot.timeline)
+    print(slot.timeline.count(1))
 
-for time in can_time:
-    # 내 차는 지나가는데 3초가 필요합니다
-    if time[1] - time[0] > 3:
-        # 3초간 예약해주세요
-        slot.reserve(time[0], time[0]+3, car_no=1)
-        break
-print(slot.timeline)
-print(slot.timeline.count(1))
+    # 한 시퀀스가 끝났으니 타임라인을 한 칸씩 옮길게요
+    slot.time_passed_dt()
+    print(slot.timeline)
 
-# 한 시퀀스가 끝났으니 타임라인을 한 칸씩 옮길게요
-slot.time_passed_dt()
-print(slot.timeline)
+    # 차량이 한 대 더 옵니다
+    # 5초 뒤 도착할건데, 5초 뒤로 가능한 시간좀 보여주세요
+    can_time = slot.check_reservation(eta = 5.0)
+    print(can_time)
 
-# 차량이 한 대 더 옵니다
-# 5초 뒤 도착할건데, 5초 뒤로 가능한 시간좀 보여주세요
-can_time = slot.check_reservation(eta = 5.0)
-print(can_time)
+    for time in can_time:
+        # 내 차는 지나가는데 2초가 필요합니다
+        if time[1] - time[0] > 2:
+            # 2초간 예약해주세요
+            slot.reserve(time[0], time[0]+2, car_no=2)
+            break
+    print(slot.timeline)
+    print(slot.timeline.count(2))
 
-for time in can_time:
-    # 내 차는 지나가는데 2초가 필요합니다
-    if time[1] - time[0] > 2:
-        # 2초간 예약해주세요
-        slot.reserve(time[0], time[0]+2, car_no=2)
-        break
-print(slot.timeline)
-print(slot.timeline.count(2))
+    # 한 시퀀스가 끝났으니 타임라인을 한 칸씩 옮길게요
+    slot.time_passed_dt()
+    print(slot.timeline)
 
-# 한 시퀀스가 끝났으니 타임라인을 한 칸씩 옮길게요
-slot.time_passed_dt()
-print(slot.timeline)
-
-#### 사용 예시 ####
+    #### 사용 예시 ####

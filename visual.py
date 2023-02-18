@@ -43,19 +43,24 @@ plt.plot([+10, +10], [-outline, -crosssize], 'k', linewidth = lw)
 
 ax = plt.axis([-outline,outline,-outline,outline])
 
+
+slot1 = utils.Reservation()
 car_1 = utils.Vehicle(1, [0.1, 0], [-100, -2.5])
 car_2 = utils.Vehicle(2, [0, 0.1], [2.5, -100])
 
-car_no_1_dot, = plt.plot([], [], 'ro')
-car_no_2_dot, = plt.plot([], [], 'bo')
-
 def animate(_):
+    # 반복문 구역
     car_1.time_passed_dt()
     car_2.time_passed_dt()
+
+    # 시각화 구역
     car_no_1_dot.set_data(car_1.whereiscar())
     car_no_2_dot.set_data(car_2.whereiscar())
-    
     return car_no_1_dot, car_no_2_dot
+
+# 시각화 구역
+car_no_1_dot, = plt.plot([], [], 'ro')
+car_no_2_dot, = plt.plot([], [], 'bo')
 
 # create animation using the animate() function
 myAnimation = animation.FuncAnimation(fig, animate, frames=np.arange(10), \

@@ -13,11 +13,12 @@ import utils
 #  Direction
 #  S=0, L=1, R=2
 
-
 # Match with reservation.py
 dt = 0.1
 T = 10
 
+
+######################### FUNCTION #########################
 # use for reserve multiple slot for each car
 def reserve_car_by_car(car):
     '''check multiple reservation is possible for each car
@@ -46,6 +47,16 @@ def reserve_car_by_car(car):
                 slots[slot].reserve(time*dt - passtime, time*dt, car.car_no)
             break
 
+def time_pass(time_passed = 1):
+    '''update reservation list by time pass
+    '''
+    global slots
+    for slot in slots:
+        slot.time_passed_dt(time_passed = time_passed)
+######################### FUNCTION #########################
+
+
+######################### initialization #########################
 # slot initialization
 slot0 = utils.Reservation()
 slot1 = utils.Reservation()
@@ -58,22 +69,32 @@ car_1 = utils.Vehicle(car_no=1, speed=2, start = 1, direction = 2)
 car_2 = utils.Vehicle(car_no=2, speed=4, start = 2, direction = 0)
 car_3 = utils.Vehicle(car_no=3, speed=2, start = 3, direction = 0)
 car_4 = utils.Vehicle(car_no=4, speed=1, start = 4, direction = 1)
-cars = [car_1, car_2, car_3, car_4]
+######################### initialization #########################
 
+
+######################### setting #########################
 # use for calculate ETA
 length = 8
-
 # time for pass crosssection
 passtime = 1
+######################### setting #########################
 
-# reserve each car
+
+######################### reserve each car #########################
 reserve_car_by_car(car = car_1)
+time_pass(time_passed=2)
 reserve_car_by_car(car = car_2)
+time_pass(time_passed=15)
 reserve_car_by_car(car = car_3)
+time_pass(time_passed=30)
 reserve_car_by_car(car = car_4)
+######################### reserve each car #########################
 
-# print reservation list
+
+
+######################### print reservation list #########################
 print(slot0.timeline)
 print(slot1.timeline)
 print(slot2.timeline)
 print(slot3.timeline, '\n')
+######################### print reservation list #########################

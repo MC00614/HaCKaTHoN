@@ -32,10 +32,12 @@ class Reservation:
                 start = t
             if start!=-1 and self.timeline[t]!=0:
                 finish = t - self.dt
-                can_reserve.append([start*self.dt, finish*self.dt])
+                interval = finish*self.dt - start*self.dt
+                can_reserve.append([start*self.dt, finish*self.dt, interval])
                 start = -1
         if start!=-1:
-            can_reserve.append([start*self.dt, int(self.T/self.dt-self.dt)*self.dt])
+            interval = int(self.T/self.dt-self.dt)*self.dt - start*self.dt
+            can_reserve.append([start*self.dt, int(self.T/self.dt-self.dt)*self.dt, interval])
         return can_reserve
                 
                 
@@ -47,6 +49,7 @@ class Reservation:
                 self.timeline[t] = car_no
             else:
                 print(f'ERROR : time converge with {self.timeline[t]}')
+                print(start, finish, t)
                 return
             
             

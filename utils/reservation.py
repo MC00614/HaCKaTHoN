@@ -53,11 +53,12 @@ class Reservation:
                 return
             
             
-    def time_passed_dt(self):
+    def time_passed_dt(self, time_passed = 1):
         """if time flowed as dt, list move leftside.
         """
-        self.timeline.pop(0)
-        self.timeline.append(0)
+        for _ in range(time_passed):
+            self.timeline.pop(0)
+            self.timeline.append(0)
         
         
 if __name__== "__main__":

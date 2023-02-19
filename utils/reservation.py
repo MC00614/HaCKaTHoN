@@ -17,7 +17,7 @@ class Reservation:
         self.dt = dt
         self.T = T
         self.timeline = [0 for _ in range(int(self.T/self.dt))]
-        
+    
     def check_reservation(self, eta, can_advance = 0):
         """Return time when you can reserve
 

@@ -20,6 +20,8 @@ class Vehicle:
         self.position = self.position + self.speed    
 
     def slot_to_reserve(self):
+        '''return slots for cross2x2
+        '''
         start = self.start
         direction = self.direction
         if start == 1:

@@ -1,11 +1,27 @@
 import utils
 
+# Match with vehicle.py
+#  Start and Finish
+#       3
+#     2   1
+#       4 
+# 
+#  SLOT
+#  0 1
+#  2 3
+# 
+#  Direction
+#  S=0, L=1, R=2
+
+
 # Match with reservation.py
 dt = 0.1
 T = 10
 
 # use for reserve multiple slot for each car
 def reserve_car_by_car(car):
+    '''check multiple reservation is possible for each car
+    '''
     global slots
     # use for multiple slot
     car_timeline = [0 for _ in range(int(T/dt))]
@@ -30,28 +46,14 @@ def reserve_car_by_car(car):
                 slots[slot].reserve(time*dt - passtime, time*dt, car.car_no)
             break
 
-
-#  Description 
-
-#  Start and Finish
-#       3
-#     2   1
-#       4 
-# 
-#  SLOT
-#  0 1
-#  2 3
-# 
-#  Direction
-#  S=0, L=1, R=2
-
-
+# slot initialization
 slot0 = utils.Reservation()
 slot1 = utils.Reservation()
 slot2 = utils.Reservation()
 slot3 = utils.Reservation()
 slots = [slot0, slot1, slot2, slot3]
 
+# vehicle initialization
 car_1 = utils.Vehicle(car_no=1, speed=2, start = 1, direction = 2)
 car_2 = utils.Vehicle(car_no=2, speed=4, start = 2, direction = 0)
 car_3 = utils.Vehicle(car_no=3, speed=2, start = 3, direction = 0)
@@ -64,12 +66,13 @@ length = 8
 # time for pass crosssection
 passtime = 1
 
+# reserve each car
 reserve_car_by_car(car = car_1)
 reserve_car_by_car(car = car_2)
 reserve_car_by_car(car = car_3)
 reserve_car_by_car(car = car_4)
 
-# reservation list
+# print reservation list
 print(slot0.timeline)
 print(slot1.timeline)
 print(slot2.timeline)

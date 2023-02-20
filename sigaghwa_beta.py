@@ -4,27 +4,28 @@ import numpy as np
     
 
 class car():
-    def __init__(self,shape,speed = 1):
+    def __init__(self,shape,speed = 1,dly=0):
+        self.dly=dly
         self.time = 0
         self.accel = 0
         self.speed = speed
         self.shape = shape
-        self.course1 = [shape[0],int(shape[1]*0.424)]
-        self.course3 = [int(shape[0]*0.574),shape[1]]
-        self.course2 = [shape[0],int(shape[1]*0.473)]
-        self.course4 = [int(shape[0]*0.522),shape[1]]
-        self.course5 = [0,int(shape[1]*0.576)]
-        self.course6 = [0,int(shape[1]*0.527)]
-        self.course7 = [int(shape[0]*0.426),0]
-        self.course8 = [int(shape[0]*0.478),0] #여기까지 직진
-        self.course9 = [0,int(shape[1]*0.527)]  #좌회전
-        self.course10= [shape[0],int(shape[1]*0.473)] #좌회전
-        self.course11= [int(shape[0]*0.478),0] #좌회전
-        self.course12= [int(shape[0]*0.522),shape[1]] #좌회전
-        self.course13 = [shape[0],int(shape[1]*0.424)] #우회전
-        self.course14 = [int(shape[0]*0.574),shape[1]]  #우회전
-        self.course15 = [0,int(shape[1]*0.576)] #우회전
-        self.course16 = [int(shape[0]*0.426),0] #우회전
+        self.course1 = [shape[0]-dly,int(shape[1]*0.424)]
+        self.course3 = [int(shape[0]*0.574),shape[1]+dly]
+        self.course2 = [shape[0]-dly,int(shape[1]*0.473)]
+        self.course4 = [int(shape[0]*0.522),shape[1]+dly]
+        self.course5 = [-dly,int(shape[1]*0.576)]
+        self.course6 = [-dly,int(shape[1]*0.527)]
+        self.course7 = [int(shape[0]*0.426),-dly]
+        self.course8 = [int(shape[0]*0.478),-dly] #여기까지 직진
+        self.course9 = [-dly,int(shape[1]*0.527)]  #좌회전
+        self.course10= [shape[0]+dly,int(shape[1]*0.473)] #좌회전
+        self.course11= [int(shape[0]*0.478),-dly] #좌회전
+        self.course12= [int(shape[0]*0.522),shape[1]+dly] #좌회전
+        self.course13 = [shape[0]+dly,int(shape[1]*0.424)] #우회전
+        self.course14 = [int(shape[0]*0.574),shape[1]+dly]  #우회전
+        self.course15 = [-dly,int(shape[1]*0.576)] #우회전
+        self.course16 = [int(shape[0]*0.426),-dly] #우회전
     def move_course1(self,image):
         cv2.circle(image,self.course1,15,(255,255,255), -1)
         self.time = self.time + 1
@@ -131,58 +132,58 @@ class car():
         else:
             self.course16[0] = self.course16[0] - self.speed
 
-image = cv2.imread("1111.jpg",cv2.IMREAD_UNCHANGED)
-image = cv2.pyrUp(image)
-car1 = car(speed = 3,shape = image.shape)
-car2 = car(speed = 4,shape = image.shape)
-car3 = car(speed = 1,shape = image.shape)
-car4 = car(speed = 2,shape = image.shape)
-car5 = car(speed = 2,shape = image.shape)
-car6 = car(speed = 3,shape = image.shape)
-car7 = car(speed = 2,shape = image.shape)
-car8 = car(speed = 4,shape = image.shape)
-car9 = car(speed = 4,shape=image.shape)
-car10 = car(speed = 7,shape=image.shape)
-
-car11 = car(speed = 3,shape=image.shape)
-car12 = car(speed = 4,shape=image.shape)
-car13 = car(speed = 8,shape=image.shape)
-car14 = car(speed = 2,shape=image.shape)
-car15 = car(speed = 6,shape=image.shape)
-
-car16 = car(speed = 4,shape=image.shape)
-#image = cv2.imread("1111.jpg",cv2.IMREAD_UNCHANGED
-
-while cv2.waitKey(33) < 0:
-    image = cv2.imread("1111.jpg",cv2.IMREAD_UNCHANGED)
+if __name__=='__main__':
+    image = cv2.imread("background.jpg",cv2.IMREAD_UNCHANGED)
     image = cv2.pyrUp(image)
-    car2.move_course1(image)    
-    car1.move_course2(image)
-    car3.move_course3(image)
-    car4.move_course4(image)
-    car5.move_course5(image)
-    car6.move_course6(image)
-    car7.move_course7(image)
-    car8.move_course8(image)
-    car9.move_course9(image)
-    car10.move_course10(image)
-    car11.move_course11(image)
-    
-    car12.move_course12(image)
-    
-    car13.move_course13(image)
-    
-    car14.move_course14(image)
-    
-    car15.move_course15(image)
-    
-    car16.move_course16(image)
-    cv2.imshow('image circle', image)
-    
-    
-cv2.waitKey()
+    car1 = car(speed = 3,shape = image.shape)
+    car2 = car(speed = 4,shape = image.shape)
+    car3 = car(speed = 1,shape = image.shape)
+    car4 = car(speed = 2,shape = image.shape)
+    car5 = car(speed = 2,shape = image.shape)
+    car6 = car(speed = 3,shape = image.shape)
+    car7 = car(speed = 2,shape = image.shape)
+    car8 = car(speed = 4,shape = image.shape)
+    car9 = car(speed = 4,shape=image.shape)
+    car10 = car(speed = 7,shape=image.shape)
+
+    car11 = car(speed = 3,shape=image.shape)
+    car12 = car(speed = 4,shape=image.shape)
+    car13 = car(speed = 8,shape=image.shape)
+    car14 = car(speed = 2,shape=image.shape)
+    car15 = car(speed = 6,shape=image.shape)
+
+    car16 = car(speed = 4,shape=image.shape)
+    #image = cv2.imread("1111.jpg",cv2.IMREAD_UNCHANGED
+
+    while cv2.waitKey(33) < 0:
+        image = cv2.imread("background.jpg",cv2.IMREAD_UNCHANGED)
+        image = cv2.pyrUp(image)
+        car2.move_course1(image)
+        car1.move_course2(image)
+        car3.move_course3(image)
+        car4.move_course4(image)
+        car5.move_course5(image)
+        car6.move_course6(image)
+        car7.move_course7(image)
+        car8.move_course8(image)
+        car9.move_course9(image)
+        car10.move_course10(image)
+        car11.move_course11(image)
+
+        car12.move_course12(image)
+
+        car13.move_course13(image)
+
+        car14.move_course14(image)
+
+        car15.move_course15(image)
+
+        car16.move_course16(image)
+        cv2.imshow('image circle', image)
+
+
+    cv2.waitKey()
 
 
 
-    
-    
+

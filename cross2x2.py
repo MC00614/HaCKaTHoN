@@ -55,7 +55,6 @@ def time_pass(time_passed = 1):
         slot.time_passed_dt(time_passed = time_passed)
 ######################### FUNCTION #########################
 
-
 ######################### initialization #########################
 # slot initialization
 slot0 = utils.Reservation()
@@ -79,22 +78,22 @@ length = 8
 passtime = 1
 ######################### setting #########################
 
+if __name__=='__main__':
+    ######################### reserve each car #########################
+    reserve_car_by_car(car = car_1)
+    time_pass(time_passed=2)
+    reserve_car_by_car(car = car_2)
+    time_pass(time_passed=15)
+    reserve_car_by_car(car = car_3)
+    time_pass(time_passed=30)
+    reserve_car_by_car(car = car_4)
+    ######################### reserve each car #########################
 
-######################### reserve each car #########################
-reserve_car_by_car(car = car_1)
-time_pass(time_passed=2)
-reserve_car_by_car(car = car_2)
-time_pass(time_passed=15)
-reserve_car_by_car(car = car_3)
-time_pass(time_passed=30)
-reserve_car_by_car(car = car_4)
-######################### reserve each car #########################
 
 
-
-######################### print reservation list #########################
-print(slot0.timeline)
-print(slot1.timeline)
-print(slot2.timeline)
-print(slot3.timeline, '\n')
-######################### print reservation list #########################
+    ######################### print reservation list #########################
+    print(slot0.timeline)
+    print(slot1.timeline)
+    print(slot2.timeline)
+    print(slot3.timeline, '\n')
+    ######################### print reservation list #########################

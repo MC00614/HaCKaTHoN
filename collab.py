@@ -5,7 +5,7 @@ import cross2x2 as crs
 import random
 
 def link(car_1):
-    car1 = si.car(speed=car_1.speed, shape=image.shape)
+    car1 = si.car(speed=car_1.speed, shape=image.shape,dly=random.randint(0,1000))
     return car1
 
 

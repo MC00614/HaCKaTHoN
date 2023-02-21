@@ -18,7 +18,7 @@ class Reservation:
         self.T = T
         self.timeline = [0 for _ in range(int(self.T/self.dt))]
     
-    def check_reservation(self, eta, can_advance = 0):
+    def check_reservation(self, eta, can_advance=0):
         """Return time when you can reserve
 
         Args:
@@ -59,10 +59,13 @@ class Reservation:
         for _ in range(time_passed):
             self.timeline.pop(0)
             self.timeline.append(0)
+            
+    
+            
         
         
 if __name__== "__main__":
-    #### 사용 예시 ####
+    #### 사용 예시 (수정 필요, 안돌아가여) ####
 
     # 슬롯 초기화
     slot = Reservation()

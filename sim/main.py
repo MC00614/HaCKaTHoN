@@ -29,7 +29,7 @@ slots = [slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, s
 
 # Match with reservation.py
 dt = 0.1
-T = 100
+T = 1000
 
 def reserve_car_by_car(car, vehID, eta, can_advance=0):
     '''check multiple reservation is possible for each car
@@ -57,8 +57,8 @@ def reserve_car_by_car(car, vehID, eta, can_advance=0):
         else:
             cnt = 0
         # if given time exceed time for passing crossseciton
-        if cnt>=passtime/dt:
-            print(f'car_no {vehID} is reseved in {time*dt - passtime} to {time*dt} at {car.slot_to_reserve()}')
+        if cnt>=int(passtime/dt):
+            print(f'car_no {vehID} is reserved in {time*dt - passtime} to {time*dt} at {car.slot_to_reserve()}')
             for slot in car.slot_to_reserve():
                 slots[slot].reserve(time*dt - passtime, time*dt, vehID)
             return time*dt - passtime
@@ -78,29 +78,26 @@ def main():
     while shouldContinueSim():
         VEHICLES = traci.vehicle.getIDList()    # 시뮬레이터 안에 있는 차량 관리
         newVeh = traci.simulation.getDepartedIDList()
+
         for vehID in newVeh:
+            traci.vehicle.setSpeedMode(vehID, 0)
             car = Vehicle(vehID)
             # 
             # traci.vehicle.setSpeed(vehID, 20)
-            traci.vehicle.setAccel(vehID, 9999999)
+            # traci.vehicle.setAccel(vehID, 9999)
             # 
             # print(f'speed : {vehicle._speed}')
             new_eta = reserve_car_by_car(car, vehID, eta=car.get_eta(), can_advance=0)
-            traci.vehicle.setSpeed(vehID, car.getLength()//new_eta)
-            print(car.getLength()/new_eta)
+            traci.vehicle.setSpeed(vehID, car.getLength()/new_eta)
             vehicles.append(car)
-        
+
+        # print(slot8.timeline)
         for v in vehicles:
             if v._carID not in VEHICLES:
                 # print(v._carID)
                 vehicles.pop(vehicles.index(v))
-        
         time_pass(time_passed = 1)
-                
-        
         traci.simulationStep()
-       
-
     traci.close()
 
 
@@ -112,8 +109,8 @@ def startSim():
             sumoBinary,
             '--net-file', './config/network.net.xml',
             '--route-files', './config/trips.trips.xml',
-            '--step-length', '0.5',
-            '--delay', '100',
+            '--step-length', '0.1',
+            '--delay', '50',
             '--gui-settings-file', './config/viewSettings.xml',
             '--start'
 

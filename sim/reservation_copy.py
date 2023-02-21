@@ -13,7 +13,7 @@
 class Reservation:
     '''Reservation List for Divided Section
     '''
-    def __init__(self, dt = 0.1, T = 100):
+    def __init__(self, dt = 0.1, T = 1000):
         self.dt = dt
         self.T = T
         self.timeline = [0 for _ in range(int(self.T/self.dt))]
@@ -44,13 +44,14 @@ class Reservation:
     def reserve(self, start, finish, car_no):
         """Reserve start to finish in timeline
         """
-        for t in range(int(start/self.dt), int(finish/self.dt)):
+        for t in range(int(start/self.dt)+1, int(finish/self.dt)+1):
             if self.timeline[t]==0:
                 self.timeline[t] = car_no
             else:
                 print(f'ERROR : time converge with {self.timeline[t]}')
                 print(start, finish, t)
-                return
+                # returns
+        # print(int(start/self.dt), int(finish/self.dt))
             
             
     def time_passed_dt(self, time_passed = 1):

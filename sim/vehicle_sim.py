@@ -3,9 +3,9 @@ import traci
 class Vehicle():
     def __init__(self, vehicle):
         self._carID = vehicle                           # 차량 id
-        self._speed = 20   # 현재 속도
+        self._speed = 5   # 현재 속도
         # traci.vehicle.setSpeed(self._speed)
-        self._acceleration = 0 # 가속
+        self._acceleration = 9999 # 가속
         self._route = traci.vehicle.getRoute(vehicle)   # 지나갈 경로들 id list
         self._edge = self.getEdge()     # 현재 위치한 차선id
         self._active = True                             # 차량 attribute가 바뀌었는지 아닌지 정보

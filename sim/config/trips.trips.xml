@@ -6,17 +6,17 @@
     <flow id="car5" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E3" to="E6" departPos="base" departLane="best" departSpeed="5"/>
     <flow id="car6" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E3" to="E6" departPos="base" departLane="best" departSpeed="5"/>
   
-    <flow id="car8" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E4" to="E6" departPos="base" departLane="best" departSpeed="5"/>
-    <flow id="car12" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E4" to="E3" departPos="base" departLane="best" departSpeed="5"/>
-    <flow id="car13" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E4" to="E5" departPos="base" departLane="best" departSpeed="5"/>
-    <flow id="car14" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E4" to="E5" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car8" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E4" to="E6" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car12" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E4" to="E3" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car13" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E4" to="E5" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car14" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E4" to="E5" departPos="base" departLane="best" departSpeed="5"/>
 
     <flow id="car16" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E5" to="E3" departPos="base" departLane="best" departSpeed="5"/>
     <flow id="car18" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E5" to="E6" departPos="base" departLane="best" departSpeed="5"/>
     <flow id="car20" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E5" to="E4" departPos="base" departLane="best" departSpeed="5"/>
     <flow id="car21" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E5" to="E4" departPos="base" departLane="best" departSpeed="5"/>
   
-    <flow id="car23" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E6" to="E3" departPos="base" departLane="best" departSpeed="5"/>
-    <flow id="car25" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E6" to="E5" departPos="base" departLane="best" departSpeed="5"/>
-    <flow id="car28" type="normal_car" begin="0" end="5000" vehsPerHour="250" from="-E6" to="E4" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car23" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E6" to="E3" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car25" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E6" to="E5" departPos="base" departLane="best" departSpeed="5"/>
+    <flow id="car28" type="normal_car" begin="0" end="5000" vehsPerHour="100" from="-E6" to="E4" departPos="base" departLane="best" departSpeed="5"/>
   </routes>

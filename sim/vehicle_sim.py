@@ -1,10 +1,10 @@
 import traci
 
 class Vehicle():
-    
     def __init__(self, vehicle):
         self._carID = vehicle                           # 차량 id
         self._speed = 20   # 현재 속도
+        # traci.vehicle.setSpeed(self._speed)
         self._acceleration = 0 # 가속
         self._route = traci.vehicle.getRoute(vehicle)   # 지나갈 경로들 id list
         self._edge = self.getEdge()     # 현재 위치한 차선id
@@ -104,7 +104,6 @@ class Vehicle():
                 else: return [4,5,6,10,14]
             
     def get_eta(self):
-
         value = str(round(self.getLength()/self._speed, 2))
         # print(f'length : {self.getLength()}')
         temp = value.split('.')
@@ -113,40 +112,6 @@ class Vehicle():
             value = value[:-2] + str(int(value[-2]) + 1)
             # print(f'after : {value}')
         return float(value)
-        
-    def reserve_car_by_car(self, slots, T=10):  #  원래는 reserve_car_by_car(car) 형태
-        '''check multiple reservation is possible for each car
-        '''
-        # use for multiple slot
-        car_timeline = [0 for _ in range(int(T/0.1))]
-        # print(self.slot_to_reserve())
-        for slot in self.slot_to_reserve():
-            # check time of slot after ETA
-            can_times = slots[slot].check_reserve(eta=self.get_eta())
-            # print(can_times)
-            # print(f'slot : {slot}')
-            # print(f'carID : {self._carID}')
-            for can_time in can_times:
-                #  if given time exceed time for pass through crosssection
-                if can_time[2] >= self.passtime:    # can_time[2] : interval = finish - start
-                    # can_time[2] >= self.passtime : 이용 가능한 시간이 교차로를 지나가는 시간보다 많으면
-                    for t in range(int(can_time[0]/0.1), int(can_time[1]/0.1)+1):
-                        car_timeline[t] += 1
-            # print(f'slot : {slot}')
-            # print(car_timeline)
-        cnt = 0
-        for time in range(len(car_timeline)):   # time : 0~99
-            # if all slot that car have to reserve can be reserved by sucessively(continuously)
-            if car_timeline[time] == len(self.slot_to_reserve()):
-                cnt += 1        # cnt : 연속적인 슬롯에서 예약한 시간
-            else:
-                cnt = 0
-            # print()
-            # if given time exceed time for passing crossseciton
-            if cnt>=self.passtime/0.1:
-                for slot in self.slot_to_reserve():
-                    slots[slot].reserve(time*0.1 - self.passtime, time*0.1, self._carID)
-                break
 
     def getAcceleration(self):
         return self._acceleration

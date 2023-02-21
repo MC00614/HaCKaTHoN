@@ -1,7 +1,7 @@
 from sumolib import checkBinary
 import traci
 from vehicle_sim import Vehicle
-from reservation import Reservation
+from reservation_copy import Reservation
 
 sumoBinary = checkBinary('sumo-gui')
 
@@ -27,6 +27,50 @@ slot15 = Reservation()
 
 slots = [slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14, slot15]
 
+# Match with reservation.py
+dt = 0.1
+T = 100
+
+def reserve_car_by_car(car, vehID, eta, can_advance=0):
+    '''check multiple reservation is possible for each car
+    '''
+    global slots
+    ######################### setting #########################
+    # time for pass crosssection
+    passtime = 4
+    ######################### setting #########################
+    # use for multiple slot
+    car_timeline = [0 for _ in range(int(T/dt))]
+    for slot in car.slot_to_reserve():
+        # check time of slot after ETA
+        can_times = slots[slot].check_reservation(eta=eta, can_advance=can_advance)
+        for can_time in can_times:
+            #  if given time exceed time for pass through crosssection
+            if can_time[2] >= passtime:
+                for t in range(int(can_time[0]/dt)+1, int(can_time[1]/dt)+1):
+                    car_timeline[t] += 1
+    cnt = 0
+    for time in range(len(car_timeline)):
+        # if all slot that car have to reserve can be reserved by sucessively(continuously)
+        if car_timeline[time] == len(car.slot_to_reserve()):
+            cnt += 1
+        else:
+            cnt = 0
+        # if given time exceed time for passing crossseciton
+        if cnt>=passtime/dt:
+            print(f'car_no {vehID} is reseved in {time*dt - passtime} to {time*dt} at {car.slot_to_reserve()}')
+            for slot in car.slot_to_reserve():
+                slots[slot].reserve(time*dt - passtime, time*dt, vehID)
+            return time*dt - passtime
+            # break
+
+def time_pass(time_passed = 1):
+    '''update reservation list by time pass
+    '''
+    global slots
+    for slot in slots:
+        slot.time_passed_dt(time_passed = time_passed)
+
 # main 함수 = simulmanager 클래스
 def main():
     startSim()
@@ -35,33 +79,23 @@ def main():
         VEHICLES = traci.vehicle.getIDList()    # 시뮬레이터 안에 있는 차량 관리
         newVeh = traci.simulation.getDepartedIDList()
         for vehID in newVeh:
-            vehicle = Vehicle(vehID)
-            print(f'speed : {vehicle._speed}')
-            # vehicle.reserve_car_by_car(slots)
-            vehicles.append(vehicle)
-        
+            car = Vehicle(vehID)
+            # 
+            traci.vehicle.setSpeed(vehID, 20)
+            traci.vehicle.setAccel(vehID, 9999999)
+            # 
+            # print(f'speed : {vehicle._speed}')
+            new_eta = reserve_car_by_car(car, vehID, eta=car.get_eta(), can_advance=0)
+            traci.vehicle.setSpeed(vehID, car.getLength()//new_eta)
+            print(car.getLength()//new_eta)
+            vehicles.append(car)
         
         for v in vehicles:
             if v._carID not in VEHICLES:
                 # print(v._carID)
                 vehicles.pop(vehicles.index(v))
-            # print(vehicles.count(v))
-        # print(vehicles)
         
-        
-        
-            # print(vehicles)
-        # try: print(vehicles[0].getSpeed())
-        # except: pass
-
-        # print(vehicle)
-
-            
-            # avoidEdge(vehId, EDGE_ID)
-
-        # for v in vehicle:
-        #     if vehicle[0] == v:
-        #         print(traci.vehicle.getLaneID(v))
+        time_pass(time_passed = 1)
                 
         
         traci.simulationStep()

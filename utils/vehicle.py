@@ -2,7 +2,7 @@ class Vehicle:
     def __init__(self, car_no, speed, start, direction):
         self.car_no = car_no
         self.speed = speed
-        self.position = 0
+        # self.position = 0
         self.start = start
         self.direction = direction
     

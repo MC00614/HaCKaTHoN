@@ -1,7 +1,6 @@
 import traci
 
 class Vehicle_Sim():
-    
     def __init__(self, vehicle):
         self._carID = vehicle                           # 차량 id
         self._speed = 20   # 현재 속도
@@ -51,7 +50,7 @@ class Vehicle_Sim():
         """
         self.position = self.position + self._speed
 
-    def check_timetable(self, car):        
+    # def check_timetable(self, car):        
         
 
 

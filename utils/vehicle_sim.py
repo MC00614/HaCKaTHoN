@@ -1,6 +1,6 @@
 import traci
 
-class Vehicle():
+class Vehicle_Sim():
     
     def __init__(self, vehicle):
         self._carID = vehicle                           # 차량 id

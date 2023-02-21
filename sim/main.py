@@ -30,14 +30,14 @@ slots = [slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, s
 # Match with reservation.py
 dt = 0.1
 T = 1000
-
+passtime = 1
 def reserve_car_by_car(car, vehID, eta, can_advance=0):
     '''check multiple reservation is possible for each car
     '''
-    global slots
+    global slots, passtime
     ######################### setting #########################
     # time for pass crosssection
-    passtime = 5
+    
     ######################### setting #########################
     # use for multiple slot
     car_timeline = [0 for _ in range(int(T/dt))]
@@ -74,7 +74,7 @@ def time_pass(time_passed = 1):
 # main 함수 = simulmanager 클래스
 def main():
     startSim()
-    vehicles = []   # 존재하는 모든 차량 관리
+    vehicles = {}   # 존재하는 모든 차량 관리
     while shouldContinueSim():
         VEHICLES = traci.vehicle.getIDList()    # 시뮬레이터 안에 있는 차량 관리
         newVeh = traci.simulation.getDepartedIDList()
@@ -83,19 +83,36 @@ def main():
             traci.vehicle.setSpeedMode(vehID, 0)
             car = Vehicle(vehID)
             # 
-            # traci.vehicle.setSpeed(vehID, 20)
-            # traci.vehicle.setAccel(vehID, 9999)
+            lane_list = list(traci.lane.getLastStepVehicleIDs(car.getLane()))
+            traci.vehicle.setSpeed(vehID, 20)
+            traci.vehicle.setAccel(vehID, 9999)
             # 
             # print(f'speed : {vehicle._speed}')
-            new_eta = reserve_car_by_car(car, vehID, eta=car.get_eta(), can_advance=0)
+            new_eta = car.get_eta()
+            try:  
+                prev_eta = (vehicles[lane_list[1]].eta)
+                if new_eta < prev_eta:
+                    new_eta = prev_eta
+            except:
+                pass
+            new_eta = reserve_car_by_car(car, vehID, eta=car.eta, can_advance=0)
+            car.eta = new_eta
             traci.vehicle.setSpeed(vehID, car.getLength()/new_eta)
-            vehicles.append(car)
+            vehicles[str(car._carID)] = car
+            # vehicles.append(car)
 
         # print(slot8.timeline)
-        for v in vehicles:
+        for v in list(vehicles.values()):
             if v._carID not in VEHICLES:
                 # print(v._carID)
-                vehicles.pop(vehicles.index(v))
+                vehicles.pop(str(v._carID),None)
+            v.eta = v.eta-dt
+            if v.eta < 0:
+                # print(type(v._carID))
+                try:
+                    traci.vehicle.setSpeed(v._carID, 20)
+                except:
+                    pass
         time_pass(time_passed = 1)
         traci.simulationStep()
     traci.close()
@@ -111,6 +128,8 @@ def startSim():
             '--route-files', './config/trips.trips.xml',
             '--step-length', '0.1',
             '--delay', '50',
+            '--time-to-teleport','-1',
+            '--collision.action', 'none',
             '--gui-settings-file', './config/viewSettings.xml',
             '--start'
 

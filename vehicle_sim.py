@@ -10,6 +10,7 @@ class Vehicle():
         self._edge = self.getEdge()     # 현재 위치한 차선id
         self._active = True                             # 차량 attribute가 바뀌었는지 아닌지 정보
         self.passtime = 1
+        self.eta = 0
         # self._direection = 
         self._previouslySetValues = dict()
 

@@ -37,7 +37,7 @@ def reserve_car_by_car(car, vehID, eta, can_advance=0):
     global slots
     ######################### setting #########################
     # time for pass crosssection
-    passtime = 4
+    passtime = 5
     ######################### setting #########################
     # use for multiple slot
     car_timeline = [0 for _ in range(int(T/dt))]
@@ -81,13 +81,13 @@ def main():
         for vehID in newVeh:
             car = Vehicle(vehID)
             # 
-            traci.vehicle.setSpeed(vehID, 20)
+            # traci.vehicle.setSpeed(vehID, 20)
             traci.vehicle.setAccel(vehID, 9999999)
             # 
             # print(f'speed : {vehicle._speed}')
             new_eta = reserve_car_by_car(car, vehID, eta=car.get_eta(), can_advance=0)
             traci.vehicle.setSpeed(vehID, car.getLength()//new_eta)
-            print(car.getLength()//new_eta)
+            print(car.getLength()/new_eta)
             vehicles.append(car)
         
         for v in vehicles:

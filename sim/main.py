@@ -107,7 +107,7 @@ def main():
                 # print(v._carID)
                 vehicles.pop(str(v._carID),None)
             v.eta = v.eta-dt
-            if v.eta < 0:
+            if v.eta < -passtime:
                 # print(type(v._carID))
                 try:
                     traci.vehicle.setSpeed(v._carID, 20)
